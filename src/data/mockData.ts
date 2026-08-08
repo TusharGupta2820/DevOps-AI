@@ -1,0 +1,178 @@
+import { DeploymentItem, ChatHistoryItem, LogLine, ActiveAlert, MetricCard } from '../types';
+
+export const INITIAL_DEPLOYMENTS: DeploymentItem[] = [
+  {
+    id: 'dep-1',
+    version: 'v2.4.1-rc',
+    env: 'PROD',
+    status: 'Success',
+    duration: '2m 14s',
+    timestamp: '2026-08-05 02:10 AM',
+    commit: 'a1b2c3d - Fix memory leak in auth middleware',
+    author: 'Tushar Sharma',
+  },
+  {
+    id: 'dep-2',
+    version: 'v2.4.2-beta',
+    env: 'STG',
+    status: 'Running',
+    duration: '0m 45s',
+    timestamp: '2026-08-05 02:05 AM',
+    commit: 'f9e8d7c - Upgrade Node.js runtime to v22',
+    author: 'Elena Rostova',
+  },
+  {
+    id: 'dep-3',
+    version: 'v2.4.0-hotfix',
+    env: 'PROD',
+    status: 'Failed',
+    duration: '4m 02s',
+    timestamp: '2026-08-05 03:00 AM',
+    commit: '3x2y1z - Scale HikariCP connection pool',
+    author: 'Dev Lead',
+  },
+  {
+    id: 'dep-4',
+    version: 'v2.3.9',
+    env: 'DEV',
+    status: 'Success',
+    duration: '1m 50s',
+    timestamp: '2026-08-04 11:30 PM',
+    commit: '7a8b9c0 - Update Dockerfile base image',
+    author: 'Alex Chen',
+  },
+  {
+    id: 'dep-5',
+    version: 'v2.3.8',
+    env: 'PROD',
+    status: 'Success',
+    duration: '3m 10s',
+    timestamp: '2026-08-04 06:15 PM',
+    commit: '123abc4 - Enable Redis TLS encryption',
+    author: 'Sarah Jenkins',
+  },
+];
+
+export const INITIAL_CHAT_HISTORY: ChatHistoryItem[] = [
+  { id: 'h1', title: 'Search deployments', timeAgo: '2 hours ago' },
+  { id: 'h2', title: 'Fail logs summary', timeAgo: 'Today, 3:15 AM', active: true },
+  { id: 'h3', title: 'Optimize server configs', timeAgo: 'Yesterday' },
+  { id: 'h4', title: 'Kubernetes ingress review', timeAgo: '3 days ago' },
+];
+
+export const INITIAL_ALERTS: ActiveAlert[] = [
+  {
+    id: 'alt-1',
+    title: 'High Memory Usage',
+    node: 'db-cluster-01',
+    timeAgo: '5m ago',
+    severity: 'critical',
+    description: 'PostgreSQL buffer pool memory utilization exceeded 94%.',
+  },
+  {
+    id: 'alt-2',
+    title: 'API Latency Spike',
+    node: 'gateway-eu-west',
+    timeAgo: '12m ago',
+    severity: 'critical',
+    description: 'P99 response latency spiked to 1,240ms on /api/v1/checkout.',
+  },
+  {
+    id: 'alt-3',
+    title: 'Disk Space Warning',
+    node: 'log-indexer-03',
+    timeAgo: '45m ago',
+    severity: 'warning',
+    description: 'Log partition /var/log/app is at 88% capacity.',
+  },
+];
+
+export const INITIAL_LOG_LINES: LogLine[] = [
+  {
+    id: 'log-1',
+    lineNumber: '01',
+    timestamp: '2026-08-05 02:00:01.123',
+    level: 'INFO',
+    module: '[main]',
+    message: 'Application initialized in 1.42s. Listening on 0.0.0.0:3000.',
+  },
+  {
+    id: 'log-2',
+    lineNumber: '02',
+    timestamp: '2026-08-05 02:00:05.451',
+    level: 'INFO',
+    module: '[worker-pool-1]',
+    message: 'Initialized 10 background worker threads for async task processing.',
+  },
+  {
+    id: 'log-3',
+    lineNumber: '03',
+    timestamp: '2026-08-05 02:01:12.890',
+    level: 'INFO',
+    module: '[http-nio-8080]',
+    message: 'GET /api/v1/health - 200 OK - 15ms',
+  },
+  {
+    id: 'log-4',
+    lineNumber: '04',
+    timestamp: '2026-08-05 02:02:45.001',
+    level: 'WARN',
+    module: '[db-conn-pool]',
+    message: 'Connection pool usage at 85% capacity. 17 of 20 connections active.',
+  },
+  {
+    id: 'log-5',
+    lineNumber: '05',
+    timestamp: '2026-08-05 02:02:46.102',
+    level: 'INFO',
+    module: '[cache-mgr]',
+    message: 'Cache refreshed successfully. 1,250 expired keys evicted.',
+  },
+  {
+    id: 'log-6',
+    lineNumber: '06',
+    timestamp: '2026-08-05 03:00:50.888',
+    level: 'ERROR',
+    module: '[db-conn-pool]',
+    message: 'java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.',
+    stackTrace: [
+      'at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)',
+      'at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)',
+      'at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:162)',
+      'at com.example.service.UserService.authenticate(UserService.java:84)',
+    ],
+  },
+  {
+    id: 'log-7',
+    lineNumber: '07',
+    timestamp: '2026-08-05 03:00:51.002',
+    level: 'ERROR',
+    module: '[user-service]',
+    message: 'Failed to authenticate user ID 9821. Error querying database connection pool.',
+  },
+  {
+    id: 'log-8',
+    lineNumber: '08',
+    timestamp: '2026-08-05 03:01:00.000',
+    level: 'INFO',
+    module: '[metrics-exporter]',
+    message: 'Pushed metrics to Prometheus endpoint successfully (scrapetime 12ms).',
+  },
+  {
+    id: 'log-9',
+    lineNumber: '09',
+    timestamp: '2026-08-05 03:02:15.340',
+    level: 'INFO',
+    module: '[autoscale-controller]',
+    message: 'HPA triggered horizontal scaling for deployment user-service: 3 -> 6 pods.',
+  },
+];
+
+export const BRAND_ASSETS = {
+  logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDdWhLHJW67LaRiBmVaN7nIfd4PBtgKPtuLjJMFIKh8-r5p5SvaTAQ8AenJjLC0_uuLH0xEU25hY-Bdz5Bew8YrSxQuI-8ZJA3YKvtbFGL3AuZxaNHl-8QuPCkOk0aU7DUMTJu6_LHogOJVLDboNIa_3St0moURSWgysT-ycHS9PoGwfgWzSqnWxoodVU4s3UgoCZMgwWNRQ8808xJLxdvUueLw45t2Y9oTNvDHcT1VU_9VZ10PYioInA',
+  copilotBadgeLogo: 'https://lh3.googleusercontent.com/aida/AP1WRLsG17gfro2_K4NGYGFhFs9QpEbLVCPYjJR1wIj22ukcAJXmXuCdro2VAhJTpiezXlppCios7vxPfAKPPkGzUxC9tLabdxKcrt8j-XO8mRA2lI5BMFCNSD-vyZcBs0fgSaL-fghA5FzbdU3CdaE7qRbojid5J4DNQasdcvDcgAlpcAIgbtyHbuNVihLLojOu-H3J7HfQbHGdIvPJBGPeaxtIRCs8vPa5QAyY5f44sodeolSk35iH9ZOOJEQt',
+  circuitBg: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDutX_D5tZshqwjZSSG-yn9JWiq1MdH_M0wC27L_WHDNO9bgpWs_vlMyq-6MgbFy-5R-nbDfUQthAFqbaKvI5O_WmQoXzed05iTCGIJqqKZxbLmBmyLAwSrZenDV_nQSJdopczYyBEMTg1GtBHRYUUwyspEDXr3QmW-Jv3BiNLJSdXKE2xFKlPylbtTy5-KEFz3YoiiA45CIhYDl9lQYGI-4RoWa2LsEqbqM4Zg1m3fnOD-KR9COHEWTQ',
+  avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC1ytaOPy9aonoQAVyA-7-8dJgHZvCwYTb6rjOzyHMsKLzLVmoBF5QrV7zC2zLD_N-eTki98naCnng_u4h3lDxzPyDaUaAX2AE_Ka-wq0IGiyjVAmqnRiDbCvx0euWVZhA1tzbZB1xrvPpH0kyTZWNH3YaJqPPej70tK1fYuhDbTPtc0dx_U7P24lV7tCIb7gqNW6gPrDZLzm7Jwsf4FA8s3NFrMSEu9tkj4Qv-kvJAwGdxi_PKFTIlGQ',
+  topologyMapCard: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB-5UP7-npbnB_ijONDQGCyj_YZvp2nIzae02wFx2YpmyN23NhgxNkURKUWOVQ-d9oTEz9ZRulhKIZcBnffDJrOchqSGYF8qCFsjwX3_UoW1gvARUmJEpmCx3kLU3d0Vu91OxLOSF1qfelt-i0zOLouszrXLkNKXK6q0ZCybxaSgbqkBO2RDev0zv31-pKUy51T9jX53i-UNhGpnpt6TRvYOaHA7ithegnESgmbwlLvRA21vnlrxolTIg',
+  globalTrafficMap: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDveWqt7lgJulfZHWa39e53CnzyoKUC3JobrEOYzmlEfiZhsRQB8DZ_x6fT2YWyPUbRjOV1Vrq0TDFSHyt9NgUnIg9aQn4NgSaj02HdplYWL3WxcInNA1BHEH10RjLA8CkdqNzDNegihyrsUH_wPW-hgGDpaYiKoadSyrKhmQcPLW_5YFaPdIxvzZvy438e66NbegkDxcPFDhdwBAvUM1BAVsUnUBJo70kFgn3mWjmf9qe7Ikxh8YzzPg',
+};

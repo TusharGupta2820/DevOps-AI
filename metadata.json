@@ -1,0 +1,6 @@
+{
+  "name": "AI DevOps Copilot",
+  "description": "AI-driven DevOps copilot dashboard, interactive AI assistant with live infrastructure analysis, system monitoring, log analyzer, and CI/CD operations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
