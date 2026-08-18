@@ -6,10 +6,17 @@ interface SidebarProps {
   currentPath: NavigationPath;
   onNavigate: (path: NavigationPath) => void;
   onOpenLogin: () => void;
+  isOpenMobile?: boolean;
+  onCloseMobile?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpenLogin }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpenLogin, isOpenMobile = false, onCloseMobile }) => {
   const isSelected = (path: NavigationPath) => currentPath === path;
+
+  const handleNav = (path: NavigationPath) => {
+    onNavigate(path);
+    if (onCloseMobile) onCloseMobile();
+  };
 
   const getItemClasses = (path: NavigationPath) => {
     return isSelected(path)
@@ -18,24 +25,45 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
   };
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xs transition-colors">
-      {/* Brand Header */}
-      <div 
-        className="p-4 flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 cursor-pointer group"
-        onClick={() => onNavigate('dashboard')}
-      >
-        <img 
-          alt="AI DevOps Copilot Logo" 
-          className="h-8 w-auto object-contain group-hover:scale-105 transition-transform" 
-          src={BRAND_ASSETS.logo} 
+    <>
+      {/* Mobile Backdrop Overlay */}
+      {isOpenMobile && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 lg:hidden transition-opacity"
+          onClick={onCloseMobile}
         />
-        <div className="flex flex-col">
-          <span className="text-slate-900 dark:text-slate-100 font-extrabold text-base tracking-tight leading-tight">
-            AI DevOps
-          </span>
-          <span className="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">Copilot Control</span>
+      )}
+
+      <aside className={`fixed left-0 top-0 h-full w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 flex flex-col shadow-xs transition-transform duration-300 ease-in-out ${
+        isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      }`}>
+        {/* Brand Header */}
+        <div 
+          className="p-4 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 cursor-pointer group"
+          onClick={() => handleNav('dashboard')}
+        >
+          <div className="flex items-center gap-3">
+            <img 
+              alt="AI DevOps Copilot Logo" 
+              className="h-8 w-auto object-contain group-hover:scale-105 transition-transform" 
+              src={BRAND_ASSETS.logo} 
+            />
+            <div className="flex flex-col">
+              <span className="text-slate-900 dark:text-slate-100 font-extrabold text-base tracking-tight leading-tight">
+                AI DevOps
+              </span>
+              <span className="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">Copilot Control</span>
+            </div>
+          </div>
+          {onCloseMobile && (
+            <button 
+              onClick={onCloseMobile}
+              className="lg:hidden p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+            >
+              <span className="material-symbols-outlined text-xl">close</span>
+            </button>
+          )}
         </div>
-      </div>
 
       {/* Navigation Sections */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
@@ -46,7 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </p>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('dashboard'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('dashboard'); }}
             className={getItemClasses('dashboard')}
           >
             <span className="material-symbols-outlined text-lg">dashboard</span>
@@ -54,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('ai-assistant'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('ai-assistant'); }}
             className={getItemClasses('ai-assistant')}
           >
             <span className="material-symbols-outlined text-lg">smart_toy</span>
@@ -69,7 +97,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </p>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('servers'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('servers'); }}
             className={getItemClasses('servers')}
           >
             <span className="material-symbols-outlined text-lg">dns</span>
@@ -77,7 +105,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('docker'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('docker'); }}
             className={getItemClasses('docker')}
           >
             <span className="material-symbols-outlined text-lg">terminal</span>
@@ -85,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('kubernetes'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('kubernetes'); }}
             className={getItemClasses('kubernetes')}
           >
             <span className="material-symbols-outlined text-lg">hub</span>
@@ -100,7 +128,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </p>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('cicd'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('cicd'); }}
             className={getItemClasses('cicd')}
           >
             <span className="material-symbols-outlined text-lg">sync_alt</span>
@@ -111,7 +139,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('github'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('github'); }}
             className={getItemClasses('github')}
           >
             <span className="material-symbols-outlined text-lg">code</span>
@@ -119,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('deployments'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('deployments'); }}
             className={getItemClasses('deployments')}
           >
             <span className="material-symbols-outlined text-lg">rocket_launch</span>
@@ -134,7 +162,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </p>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('monitoring'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('monitoring'); }}
             className={getItemClasses('monitoring')}
           >
             <span className="material-symbols-outlined text-lg">monitoring</span>
@@ -142,7 +170,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('logs'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('logs'); }}
             className={getItemClasses('logs')}
           >
             <span className="material-symbols-outlined text-lg">list_alt</span>
@@ -150,7 +178,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('analytics'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('analytics'); }}
             className={getItemClasses('analytics')}
           >
             <span className="material-symbols-outlined text-lg">analytics</span>
@@ -158,7 +186,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a
             href="#"
-            onClick={(e) => { e.preventDefault(); onNavigate('database-schema'); }}
+            onClick={(e) => { e.preventDefault(); handleNav('database-schema'); }}
             className={getItemClasses('database-schema')}
           >
             <span className="material-symbols-outlined text-lg">schema</span>
@@ -189,7 +217,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
         <div className="flex flex-col gap-0.5 text-xs font-medium text-slate-600 dark:text-slate-400">
           <a 
             href="#" 
-            onClick={(e) => { e.preventDefault(); onNavigate('workspace-switcher'); }} 
+            onClick={(e) => { e.preventDefault(); handleNav('workspace-switcher'); }} 
             className="flex items-center px-3 py-1.5 hover:text-slate-900 dark:hover:text-slate-100 gap-2 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-all"
           >
             <span className="material-symbols-outlined text-base">swap_horiz</span>
@@ -197,7 +225,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
           </a>
           <a 
             href="#" 
-            onClick={(e) => { e.preventDefault(); onNavigate('settings'); }} 
+            onClick={(e) => { e.preventDefault(); handleNav('settings'); }} 
             className="flex items-center px-3 py-1.5 hover:text-slate-900 dark:hover:text-slate-100 gap-2 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-all"
           >
             <span className="material-symbols-outlined text-base">settings</span>
@@ -206,5 +234,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
         </div>
       </div>
     </aside>
+    </>
   );
 };

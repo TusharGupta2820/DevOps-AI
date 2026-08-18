@@ -101,7 +101,7 @@ export const MonitoringView: React.FC<MonitoringViewProps> = ({ alerts, onNaviga
   };
 
   return (
-    <div className="flex flex-col w-full p-6 gap-6">
+    <div className="flex flex-col w-full p-3 sm:p-6 gap-4 sm:gap-6">
       {/* Top Mode Switcher Bar */}
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex gap-2">

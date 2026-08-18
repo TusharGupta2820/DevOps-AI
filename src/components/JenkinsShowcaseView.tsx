@@ -463,17 +463,17 @@ export const JenkinsShowcaseView: React.FC<JenkinsShowcaseViewProps> = ({ onNavi
   ] as const;
 
   return (
-    <div className="p-6 space-y-5 max-w-[1440px] mx-auto">
+    <div className="p-3 sm:p-6 space-y-4 sm:space-y-5 max-w-[1440px] mx-auto">
 
       {/* ── Header ───────────────────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-xl shadow-md text-white">
+          <div className="p-2.5 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-xl shadow-md text-white shrink-0">
             <span className="material-symbols-outlined text-2xl">sync_alt</span>
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 Jenkins CI/CD Automation Center
               </h1>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
@@ -498,7 +498,7 @@ export const JenkinsShowcaseView: React.FC<JenkinsShowcaseViewProps> = ({ onNavi
       </div>
 
       {/* ── Analytics Bar ────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
         {[
           { label: 'Total Builds', value: totalBuilds, icon: 'build', color: 'text-slate-700 dark:text-slate-200', bg: 'bg-slate-100 dark:bg-slate-800' },
           { label: 'Success Rate', value: `${successRate}%`, icon: 'check_circle', color: 'text-emerald-700 dark:text-emerald-300', bg: 'bg-emerald-50 dark:bg-emerald-950/40' },
@@ -622,7 +622,7 @@ export const JenkinsShowcaseView: React.FC<JenkinsShowcaseViewProps> = ({ onNavi
               </p>
 
               {/* Horizontal flow */}
-              <div className="flex flex-wrap gap-2 items-start">
+              <div className="flex overflow-x-auto pb-3 gap-2 items-start scrollbar-thin">
                 {stages.map((stage, idx) => (
                   <React.Fragment key={idx}>
                     <div className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border min-w-[100px] transition-all ${stage.status === 'running'

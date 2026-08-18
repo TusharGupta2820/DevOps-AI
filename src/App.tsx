@@ -28,10 +28,11 @@ function AppContent() {
   const [chatHistory] = useState<ChatHistoryItem[]>(INITIAL_CHAT_HISTORY);
   const [alerts] = useState<ActiveAlert[]>(INITIAL_ALERTS);
 
-  // Modals state
+  // Modals & Mobile state
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDeployModal, setShowDeployModal] = useState(false);
   const [showTopologyModal, setShowTopologyModal] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const { user, canExecuteAction } = useAuth();
@@ -95,7 +96,7 @@ function AppContent() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-100 antialiased flex flex-col transition-colors">
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div className="fixed top-20 right-6 bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-3 animate-bounce">
+        <div className="fixed top-20 right-3 sm:right-6 bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-3 animate-bounce">
           <span className="material-symbols-outlined text-emerald-400">info</span>
           <span className="font-bold text-xs">{toastMessage}</span>
           <button
@@ -108,12 +109,14 @@ function AppContent() {
       )}
 
       {/* Main App Shell Layout */}
-      <div className="flex flex-1 pt-16 pl-64">
+      <div className="flex flex-1 pt-16 lg:pl-64">
         {/* Left Navigation Sidebar */}
         <Sidebar
           currentPath={currentPath}
           onNavigate={(path) => setCurrentPath(path)}
           onOpenLogin={() => setCurrentPath('login')}
+          isOpenMobile={isMobileSidebarOpen}
+          onCloseMobile={() => setIsMobileSidebarOpen(false)}
         />
 
         {/* Top Header Bar */}
@@ -122,6 +125,7 @@ function AppContent() {
           onOpenDeployModal={handleOpenDeployModal}
           onNavigate={(path) => setCurrentPath(path)}
           onRefreshData={handleRefreshData}
+          onToggleMobileSidebar={() => setIsMobileSidebarOpen((prev) => !prev)}
         />
 
         {/* Main Content Area */}

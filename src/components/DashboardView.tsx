@@ -21,7 +21,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   );
 
   return (
-    <div className="flex flex-col w-full p-6 gap-6">
+    <div className="flex flex-col w-full p-3 sm:p-6 gap-4 sm:gap-6">
       {/* Banner / Welcome Header */}
       <section className="flex flex-col gap-2 w-full bg-white rounded-xl p-6 shadow-xs relative overflow-hidden border border-slate-200">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-50/80 via-indigo-50/30 to-transparent pointer-events-none"></div>

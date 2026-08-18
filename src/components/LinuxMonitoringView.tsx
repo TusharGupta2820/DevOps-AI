@@ -335,7 +335,7 @@ export const LinuxMonitoringView: React.FC<LinuxMonitoringViewProps> = ({ onNavi
   ];
 
   return (
-    <div className="flex flex-col w-full p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="flex flex-col w-full p-3 sm:p-6 space-y-4 sm:space-y-6 max-w-7xl mx-auto">
       {/* Toast Notification */}
       {toast && (
         <div className="fixed top-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-blue-500 flex items-center gap-2 animate-bounce">

@@ -11,6 +11,7 @@ interface HeaderProps {
   onOpenDeployModal: () => void;
   onNavigate: (path: NavigationPath) => void;
   onRefreshData?: () => void;
+  onToggleMobileSidebar?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -18,6 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenDeployModal,
   onNavigate,
   onRefreshData,
+  onToggleMobileSidebar,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
@@ -55,17 +57,26 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className="fixed top-0 left-64 right-0 h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-40 px-6 flex items-center justify-between shadow-xs transition-colors">
-        {/* Search Input */}
-        <div className="flex-1 max-w-xl">
-          <div className="relative flex items-center">
+      <header className="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-40 px-3 sm:px-6 flex items-center justify-between shadow-xs transition-all">
+        {/* Left Section: Mobile Menu + Search Input */}
+        <div className="flex items-center gap-2 flex-1 max-w-xl">
+          {onToggleMobileSidebar && (
+            <button
+              onClick={onToggleMobileSidebar}
+              className="lg:hidden p-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
+              title="Open Navigation Menu"
+            >
+              <span className="material-symbols-outlined text-2xl">menu</span>
+            </button>
+          )}
+          <div className="relative flex-1 flex items-center">
             <span className="material-symbols-outlined absolute left-3 text-slate-400 pointer-events-none text-xl">
               search
             </span>
             <input
               type="text"
-              className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2 pl-10 pr-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400"
-              placeholder="Search services, pods, deployments (Cmd + K)..."
+              className="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2 pl-10 pr-3 text-xs sm:text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400"
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
