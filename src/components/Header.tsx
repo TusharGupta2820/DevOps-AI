@@ -106,17 +106,6 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="hidden sm:inline">Refresh</span>
           </button>
 
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs font-bold cursor-pointer"
-            title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
-          >
-            <span className="material-symbols-outlined text-base text-amber-500 dark:text-blue-400">
-              {theme === 'light' ? 'dark_mode' : 'light_mode'}
-            </span>
-          </button>
-
           {/* Notifications Icon */}
           <div className="relative">
             <button
