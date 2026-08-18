@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +8,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- Theme initializer: runs synchronously before React to prevent flash of wrong theme -->
+    <script>
+      (function () {
+        var saved = '';
+        try { saved = localStorage.getItem('devops_copilot_theme'); } catch (e) {}
+        var isDark = saved === 'dark';
+        // If no preference saved yet, default to light and store it
+        if (!saved) {
+          try { localStorage.setItem('devops_copilot_theme', 'light'); } catch (e) {}
+        }
+        // Apply class to <html> before any rendering
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
   </head>
   <body class="bg-background font-body text-on-surface antialiased">
     <div id="root"></div>
