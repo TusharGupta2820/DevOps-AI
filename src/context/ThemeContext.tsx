@@ -12,9 +12,13 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
-    const saved = localStorage.getItem('devops_copilot_theme');
-    if (saved === 'dark' || saved === 'light') return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    try {
+      const saved = localStorage.getItem('devops_copilot_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+    } catch {
+      // localStorage not available (SSR or private browsing)
+    }
+    return 'light'; // default to light on fresh load / Vercel deployment
   });
 
   useEffect(() => {
