@@ -16,6 +16,7 @@ import { MonitoringView } from './components/MonitoringView';
 import { LogsView } from './components/LogsView';
 import { LoginView } from './components/LoginView';
 import { DatabaseSchemaView } from './components/DatabaseSchemaView';
+import { JenkinsShowcaseView } from './components/JenkinsShowcaseView';
 import { OtherViews } from './components/OtherViews';
 import { CreateModal } from './components/CreateModal';
 import { DeployModal } from './components/DeployModal';
@@ -161,7 +162,14 @@ function AppContent() {
             />
           )}
 
-          {![ 'dashboard', 'ai-assistant', 'monitoring', 'logs', 'database-schema', 'login' ].includes(currentPath) && (
+          {currentPath === 'cicd' && (
+            <JenkinsShowcaseView
+              onNavigate={(path) => setCurrentPath(path)}
+              onOpenDeployModal={handleOpenDeployModal}
+            />
+          )}
+
+          {![ 'dashboard', 'ai-assistant', 'monitoring', 'logs', 'database-schema', 'cicd', 'login' ].includes(currentPath) && (
             <OtherViews
               currentPath={currentPath}
               deployments={deployments}

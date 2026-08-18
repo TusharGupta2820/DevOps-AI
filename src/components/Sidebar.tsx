@@ -104,7 +104,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, onNavigate, onOpe
             className={getItemClasses('cicd')}
           >
             <span className="material-symbols-outlined text-lg">sync_alt</span>
-            <span>CI/CD Pipelines</span>
+            <span className="flex-1">Jenkins CI/CD</span>
+            <span className="text-[10px] font-extrabold bg-amber-500/20 text-amber-600 dark:text-amber-400 px-1.5 py-0.5 rounded border border-amber-500/30">
+              Live
+            </span>
           </a>
           <a
             href="#"

@@ -23,7 +23,7 @@ let alertThresholds = {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3004;
 
   app.use(express.json({ limit: "10mb" }));
 
@@ -51,7 +51,8 @@ async function startServer() {
   // Linux Monitoring REST APIs using Python psutil collector
   app.get("/api/monitoring/linux/metrics", (req, res) => {
     const scriptPath = path.join(process.cwd(), "scripts", "psutil_collector.py");
-    execFile("python3", [scriptPath], { timeout: 4000 }, (error, stdout, stderr) => {
+    const pyExe = process.platform === "win32" ? "python" : "python3";
+    execFile(pyExe, [scriptPath], { timeout: 4000 }, (error, stdout, stderr) => {
       if (error) {
         console.error("Error executing psutil collector:", error, stderr);
         // Fallback response if python script fails
@@ -288,9 +289,10 @@ Include sections: Incident Overview, Summary & Impact, Timeline, Root Cause, Mit
     const useGlobalPython = !fs.existsSync(pythonPath);
     const pythonCmd = useGlobalPython ? (isWin ? "python" : "python3") : pythonPath;
     
+    const formattedPythonCmd = pythonCmd.includes(" ") ? `"${pythonCmd}"` : pythonCmd;
     console.log(`Using Python executable: ${pythonCmd}`);
     const backendProcess = spawn(
-      pythonCmd,
+      formattedPythonCmd,
       ["-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8000"],
       { cwd: backendDir, stdio: "inherit", shell: true }
     );
